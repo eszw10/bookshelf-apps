@@ -71,6 +71,17 @@ document.addEventListener(RENDER_BOOKS, () => {
 
 });
 
+//fungsi untuk menemukan index buku
+function findBookIndex(bookId) {
+  for (const index in books) {
+    if (books[index].id === bookId) {
+      return index;
+    }
+  }
+ 
+  return -1;
+}
+
 //fungsi untuk menghapus buku
 function removeBook(bookId,title) {
     const targetBook = findBookIndex(bookId);
@@ -98,43 +109,46 @@ function undoBookFromCompleted(bookId) {
     saveData();
 }
 
-//fungsi untuk menemukan index buku
-function findBookIndex(bookId) {
-    for (const index in books) {
-      if (books[index].id === bookId) {
-        return index;
-      }
-    }
-   
-    return -1;
-}
-
 //fungsi untuk menampilkan buku 
 function createBook(bookObject) {
     const bookContainer = document.createElement('article');
-    bookContainer.classList.add('book','item');
+    bookContainer.classList.add('book-card');
+
+    const bookImage = document.createElement('img');
+    bookImage.setAttribute('src','./images/bookPic.jpeg');
+    bookImage.setAttribute('id','image')
+    bookContainer.appendChild(bookImage)
+
     const title = document.createElement('h3');
     title.innerText = bookObject.title;
     bookContainer.appendChild(title);
    
     const author = document.createElement('p');
-    author.innerText = `Penulis: ${bookObject.author}`;
+    author.innerText = `${bookObject.author}`;
+    author.style.fontSize='14px'
     bookContainer.appendChild(author)
 
     const bookYear = document.createElement('p');
-    bookYear.innerText = `Tahun: ${bookObject.year}`;
+    bookYear.innerText = `${bookObject.year}`;
+    bookYear.style.color="#7f8798"
+    bookYear.style.fontSize='12px'
+    bookYear.style.fontWeight='bold'
     bookContainer.appendChild(bookYear)
 
     const btnContainer = document.createElement('div');
     btnContainer.classList.add('action');
 
     const isRead = document.createElement('button')
-    isRead.innerText = bookObject.isCompleted? 'Belum selesai dibaca' : 'Selesai dibaca'
-    isRead.classList.add('green')
+    const readStatus = document.createElement('i')
+    isRead.appendChild(readStatus)
+    readStatus.classList.add('fa-solid')
+    readStatus.classList.add(bookObject.isCompleted? 'fa-xmark' : 'fa-check')
 
     const deleteBook = document.createElement('button')
-    deleteBook.innerText = 'Hapus buku'
-    deleteBook.classList.add('red')
+    const deleteSymbol = document.createElement('i')
+    deleteBook.appendChild(deleteSymbol)
+    deleteSymbol.classList.add('fa-solid')
+    deleteSymbol.classList.add('fa-trash')
 
     deleteBook.addEventListener('click', () => {
       removeBook(bookObject.id,bookObject.title);
