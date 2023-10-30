@@ -209,6 +209,11 @@ function createBook(bookObject) {
 
   document.addEventListener(SAVED_BOOKS,() => {
     console.log(localStorage.getItem(STORAGE_KEY));
+    alert("Perubahan Disimpan")
+  });
+
+  document.addEventListener(RENDER_BOOKS,() => {
+    console.log("Memuat ulang Rak Buku");
   });
 
   function loadDataFromStorage() {
