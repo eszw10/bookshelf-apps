@@ -34,6 +34,7 @@ function addBook() {
     books.push(bookObject)
 
     document.dispatchEvent(new Event(RENDER_BOOKS));
+    saveData();
 }
 
 //fungsi untuk membuat id unik untuk setiap objek
